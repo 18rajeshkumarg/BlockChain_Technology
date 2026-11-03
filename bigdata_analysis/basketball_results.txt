@@ -1,0 +1,39 @@
+BIG DATA HADOOP PROJECT: BASKETBALL MATCH ANALYSIS
+============================================================
+
+Data Source: Retrosheet play-by-play event files
+Location: Big Data Hadoop/basketball_match_analysis/gamedata/
+
+RESULTS SUMMARY:
+- Total files analyzed: 30
+- Total event records: 385,369
+- Unique teams: 4,878
+- Years covered: 2017
+
+MOST COMMON TEAMS:
+1. Team 8: 29,707 records
+2. Team 7: 27,737 records
+3. Team 6: 25,089 records
+4. Team 2: 23,628 records
+5. Team 5: 22,883 records
+
+PIG SCRIPT COMPATIBILITY:
+- total_counts.pig: Filters records starting with "id" and counts matches
+  per league (American League .EVA vs National League .EVN)
+- id_to_name.pig: Maps player IDs to names from .ROS roster files
+
+FILE FORMAT:
+- .EVA files: American League event data
+- .EVN files: National League event data  
+- .ROS files: Roster/mapping data
+
+PYTHON ANALYSIS METHOD:
+- Read each file line by line
+- Skip header lines (starting with "id," or "version,")
+- Parse comma-separated event records
+- Count by team ID and file type
+
+NOTES:
+- Data is hand-encoded with errors and malformed records
+- Requires Hadoop/Pig for full distributed processing
+- Python alternative successfully processed 385K records

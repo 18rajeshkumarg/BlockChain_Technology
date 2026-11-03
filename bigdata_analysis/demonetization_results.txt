@@ -1,0 +1,36 @@
+BIG DATA HADOOP PROJECT: DEMONETIZATION SENTIMENT ANALYSIS
+============================================================
+
+Data Source: Twitter tweets about Indian demonetization (2016)
+Location: Big Data Hadoop/demonetization_analysis/
+
+RESULTS SUMMARY:
+- Total tweets analyzed: 8,000
+- Positive tweets: 1,144 (14.3%)
+- Negative tweets: 749 (9.4%)
+- Neutral/other: 6,107 (76.3%)
+
+SENTIMENT ANALYSIS METHOD:
+- Simple keyword-based scoring using positive/negative word lists
+- Positive indicators: "good", "great", "positive", "support", "appreciate"
+- Negative indicators: "bad", "negative", "problem", "issue", "against"
+
+AFINN DICTIONARY:
+- Location: Big Data Hadoop/demonetization_analysis/AFINN.txt
+- Contains word-level sentiment scores (tab-separated: word	score)
+- Full sentiment calculation would sum scores for each tweet's text
+- Not fully computed in this run (keyword method used instead)
+
+PROJECT SCRIPT (would run on Hadoop):
+- demo notetization_analysis.pig: Pig Latin script for full sentiment processing
+- Requires: hadoop fs -mkdir /demion_analysis, copy data to HDFS, then
+  $ pig -x mapreduce demonetization_analysis.pig
+
+OUTPUT (on Hadoop):
+- positive_tweets/ and negative_tweets/ directories on HDFS
+- Saved as text files in respective folders
+
+NOTES:
+- Full AFINN dictionary processing not executed in this environment
+- Python alternative provides quick keyword-based overview
+- For production: use Hadoop/Pig for complete analysis with AFINN scores

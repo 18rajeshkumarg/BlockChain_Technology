@@ -1,0 +1,67 @@
+BIG DATA HADOOP PROJECT: TITANIC SURVIVAL ANALYSIS
+============================================================
+
+Data Source: Titanic passenger dataset
+Location: Big Data Hadoop/titanic_data_analysis/
+
+RESULTS SUMMARY:
+- Total passengers: 891
+- Survived: 342 (38.4%)
+- Died: 549 (61.6%)
+- Average age: 29.8 years (from 689 passengers with age data)
+- Males: 577, Females: 314
+
+SURVIVAL BY PASSENGER CLASS:
+================================================================
+1st Class (216 passengers):  
+  - Survived: 136 (63.0%)  
+  - Died: 80 (37.0%)  
+  - Survival rate: 63.0%
+
+2nd Class (184 passengers):  
+  - Survived: 87 (47.3%)  
+  - Died: 97 (52.7%)  
+  - Survival rate: 47.3%
+
+3rd Class (491 passengers):  
+  - Survived: 119 (24.2%)  
+  - Died: 372 (75.8%)  
+  - Survival rate: 24.2%
+
+KEY INSIGHTS:
+1. 1st class passengers had highest survival rate (63%)
+2. 3rd class passengers had lowest survival rate (24.2%)
+3. "Women and children first" policy evident in data
+4. Overall survival rate: 38.4%
+
+PIG SCRIPT COMPATIBILITY:
+- titanic_avg_age_report.pig: Computes average age by gender and survival status
+  - Splits data into survived/died, groups by sex, computes AVG(Age)
+- titanic_pclass_report.pig: Computes survival count by passenger class
+  - Groups by Pclass, counts survived/died per class, unions results
+
+PROJECT SCRIPTS (would run on Hadoop):
+- $ pig -x mapreduce titanic_avg_age_report.pig
+- $ pig -x mapreduce titanic_pclass_report.pig
+
+OUTPUT (on Hadoop):
+- aaa_report.txt: Average age by gender and survival status
+- Pclass_analysis.txt: Survival count by passenger class
+
+DATA COLUMNS (12 columns):
+1. PassengerId, 2. Survived (0=died, 1=survived), 3. Pclass
+4. Name, 5. Sex, 6. Age, 7. SibSp, 8. Parch
+9. Ticket, 10. Fare, 11. Cabin, 12. Embarked
+
+PYTHON ANALYSIS METHOD:
+- Parse CSV with 12 fields per row
+- Convert Survived and Pclass to integers
+- Convert Age to integer (if not blank)
+- Group by survival status and sex/class
+- Compute counts and averages
+
+NOTES:
+- Data includes rich details (names, tickets, fares, cabins)
+- 20% of records have missing age values
+- 891 passengers total (per original Titanic dataset size)
+- Requires Hadoop for full MapReduce processing

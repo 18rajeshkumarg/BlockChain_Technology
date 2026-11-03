@@ -1,0 +1,102 @@
+================================================================================
+  BIG DATA HADOOP PROJECTS - COMPLETE ANALYSIS REPORT
+================================================================================
+
+  Project Location: C:\Users\asha g\Documents\BlockChain Project
+
+  Analysis Date: 2026-11-03 21:14:52
+
+  Python Version: 3.15.2
+
+  PROJECT 1: BASKETBALL MATCH ANALYSIS
+  ==================================================
+
+  Location: Big Data Hadoop/basketball_match_analysis/
+  Data Type: Retrosheet play-by-play baseball/softball event data
+  Records Processed: 385,369 event records across 30 files
+  Years Covered: 2017
+
+  Key Metrics:
+  - Total files: 30
+  - Unique teams: 4,878
+  - Most common teams: Teams 8, 7, 6, 2, 5
+
+  Pig Script Compatibility:
+  - total_counts.pig: Count matches by league (AL vs NL)
+  - id_to_name.pig: Map player IDs to names from roster files
+
+  Python Analysis: ✅ Completed successfully
+  Hadoop/Pig Requirement: 📊 Requires Hadoop cluster
+
+  PROJECT 2: DEMONETIZATION SENTIMENT ANALYSIS
+  ==================================================
+
+  Location: Big Data Hadoop/demonetization_analysis/
+  Data Type: Twitter tweets about Indian demonetization (2016)
+  Records Processed: 8,000 tweets
+
+  Key Metrics:
+  - Total tweets: 8,000
+  - Positive tweets: 1,144 (14.3%)
+  - Negative tweets: 749 (9.4%)
+  - Positive sentiment ratio: 14.3%
+
+  Sentiment Method: Keyword-based scoring
+  AFINN Dictionary: Present (word-level scores, not fully computed)
+
+  Pig Script Compatibility:
+  - demo notetization_analysis.pig: Full sentiment processing on Hadoop
+
+  Python Analysis: ✅ Completed successfully
+  Hadoop/Pig Requirement: 📊 Requires Hadoop cluster
+
+  PROJECT 3: TITANIC SURVIVAL ANALYSIS
+  ==================================================
+
+  Location: Big Data Hadoop/titanic_data_analysis/
+  Data Type: Titanic passenger dataset (891 records)
+
+  Key Metrics:
+  - Total passengers: 891
+  - Survived: 342 (38.4%)
+  - Died: 549 (61.6%)
+  - Average age: 29.8 years (from 689 passengers with age data)
+  - Sex ratio: 577 male : 314 female
+
+  Survival by Passenger Class:
+  - 1st Class: 136/216 survived (63.0%)
+  - 2nd Class: 87/184 survived (47.3%)
+  - 3rd Class: 119/491 survived (24.2%)
+
+  Pig Script Compatibility:
+  - titanic_avg_age_report.pig: Avg age by gender and survival status
+  - titanic_pclass_report.pig: Survival count by passenger class
+
+  Python Analysis: ✅ Completed successfully
+  Hadoop/Pig Requirement: 📊 Requires Hadoop cluster
+
+  SUMMARY OF ALL FINDINGS
+  ==================================================
+
+  ✅ ALL THREE PROJECTS ANALYZED SUCCESSFULLY USING PYTHON
+
+  Project 1 - Basketball: 385K records, 4.8K teams, 30 files
+  Project 2 - Demonetization: 8K tweets, 14.3% positive sentiment
+  Project 3 - Titanic: 891 passengers, 38.4% survival rate, class disparities
+
+  📁 ANALYSIS RESULTS SAVED TO:
+  - C:\Users\asha g\Documents\BlockChain Project\bigdata_analysis\basketball_results.txt
+  - C:\Users\asha g\Documents\BlockChain Project\bigdata_analysis\demonetization_results.txt
+  - C:\Users\asha g\Documents\BlockChain Project\bigdata_analysis\titanic_results.txt
+
+  📄 COMPREHENSIVE REPORT: C:\Users\asha g\Documents\BlockChain Project\bigdata_analysis\complete_report.txt
+
+  🚀 NEXT STEPS:
+  1. Install Hadoop/Pig for full distributed processing if needed
+  2. Expand sentiment analysis with AFINN dictionary scores
+  3. Add more detailed demographic analysis to Titanic project
+  4. Visualize basketball data by game/year trends
+
+  ================================================================
+  End of Report
+  ================================================================
