@@ -71,7 +71,7 @@ type VerificationRecord = {
 }
 
 async function loadArtifact(): Promise<CredentialArtifact> {
-  const response = await fetch('/contracts/CredentialService.json')
+  const response = await fetch(`${import.meta.env.BASE_URL}contracts/CredentialService.json`)
   if (!response.ok) throw new Error('CredentialService artifact is missing. Run npm run sync:contracts.')
   return await response.json() as CredentialArtifact
 }

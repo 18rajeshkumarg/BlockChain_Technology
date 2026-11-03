@@ -99,7 +99,7 @@ function StudentApp() {
         throw new Error('Switch MetaMask to Ganache Local (chain ID 1337).')
       }
 
-      const response = await fetch('/contracts/StudentRegistry.json')
+      const response = await fetch(`${import.meta.env.BASE_URL}contracts/StudentRegistry.json`)
       if (!response.ok) throw new Error('Student contract artifact missing. Run npm run sync:contracts.')
       const artifact = await response.json() as Artifact
       const deployment = artifact.networks['5777']
