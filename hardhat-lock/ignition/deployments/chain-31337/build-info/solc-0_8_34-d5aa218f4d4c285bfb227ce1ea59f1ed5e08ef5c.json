@@ -1,0 +1,49 @@
+{
+  "_format": "hh3-sol-build-info-1",
+  "id": "solc-0_8_34-d5aa218f4d4c285bfb227ce1ea59f1ed5e08ef5c",
+  "solcVersion": "0.8.34",
+  "solcLongVersion": "0.8.34+commit.80d5c536",
+  "compilerType": "solc",
+  "toolVersions": {
+    "hardhat": "3.18.1"
+  },
+  "userSourceNameMap": {
+    "contracts/Lock.sol": "project/contracts/Lock.sol"
+  },
+  "input": {
+    "language": "Solidity",
+    "settings": {
+      "evmVersion": "osaka",
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "outputSelection": {
+        "*": {
+          "": [
+            "ast"
+          ],
+          "*": [
+            "abi",
+            "evm.bytecode.linkReferences",
+            "evm.bytecode.object",
+            "evm.bytecode.opcodes",
+            "evm.bytecode.sourceMap",
+            "evm.deployedBytecode.immutableReferences",
+            "evm.deployedBytecode.linkReferences",
+            "evm.deployedBytecode.object",
+            "evm.deployedBytecode.opcodes",
+            "evm.deployedBytecode.sourceMap",
+            "evm.methodIdentifiers"
+          ]
+        }
+      },
+      "remappings": []
+    },
+    "sources": {
+      "project/contracts/Lock.sol": {
+        "content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.34;\r\n\r\ncontract Lock {\r\n    uint256 public unlockTime;\r\n    address payable public owner;\r\n\r\n    event Withdrawal(uint256 amount, uint256 when);\r\n\r\n    constructor(uint256 _unlockTime) payable {\r\n        require(block.timestamp < _unlockTime, \"Unlock time must be in the future\");\r\n        unlockTime = _unlockTime;\r\n        owner = payable(msg.sender);\r\n    }\r\n\r\n    function withdraw() external {\r\n        require(block.timestamp >= unlockTime, \"Lock has not expired\");\r\n        require(msg.sender == owner, \"You aren't the owner\");\r\n\r\n        uint256 amount = address(this).balance;\r\n        emit Withdrawal(amount, block.timestamp);\r\n        (bool sent, ) = owner.call{value: amount}(\"\");\r\n        require(sent, \"Failed to send Ether\");\r\n    }\r\n}"
+      }
+    }
+  }
+}

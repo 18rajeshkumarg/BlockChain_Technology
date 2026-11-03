@@ -1,0 +1,16 @@
+**/node_modules/
+**/build/
+**/dist/
+**/artifacts/
+**/cache/
+**/coverage/
+**/.secret
+**/.env
+**/.env.*
+!**/.env.example
+**/*.key
+**/*.pem
+final-test-report.json
+final-test-report.md
+.DS_Store
+Thumbs.db

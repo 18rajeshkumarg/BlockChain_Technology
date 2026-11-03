@@ -1,0 +1,49 @@
+{
+  "_format": "hh3-sol-build-info-1",
+  "id": "solc-0_8_34-6b07648b1f149c1d9043be089d741d4ec90de415",
+  "solcVersion": "0.8.34",
+  "solcLongVersion": "0.8.34+commit.80d5c536",
+  "compilerType": "solc",
+  "toolVersions": {
+    "hardhat": "3.18.1"
+  },
+  "userSourceNameMap": {
+    "contracts/CredentialService.sol": "project/contracts/CredentialService.sol"
+  },
+  "input": {
+    "language": "Solidity",
+    "settings": {
+      "evmVersion": "london",
+      "optimizer": {
+        "enabled": false,
+        "runs": 200
+      },
+      "outputSelection": {
+        "*": {
+          "": [
+            "ast"
+          ],
+          "*": [
+            "abi",
+            "evm.bytecode.linkReferences",
+            "evm.bytecode.object",
+            "evm.bytecode.opcodes",
+            "evm.bytecode.sourceMap",
+            "evm.deployedBytecode.immutableReferences",
+            "evm.deployedBytecode.linkReferences",
+            "evm.deployedBytecode.object",
+            "evm.deployedBytecode.opcodes",
+            "evm.deployedBytecode.sourceMap",
+            "evm.methodIdentifiers"
+          ]
+        }
+      },
+      "remappings": []
+    },
+    "sources": {
+      "project/contracts/CredentialService.sol": {
+        "content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.34;\r\n\r\ncontract CredentialService {\r\n    struct Credential {\r\n        address holder;\r\n        address issuer;\r\n        uint64 expiresAt;\r\n        bool revoked;\r\n        bool exists;\r\n    }\r\n\r\n    address public immutable owner;\r\n    uint256 public verificationFee = 0.001 ether;\r\n    uint256 public totalVerifications;\r\n\r\n    mapping(address => bool) public authorizedIssuers;\r\n    mapping(bytes32 => Credential) private credentials;\r\n\r\n    event IssuerAuthorizationChanged(address indexed issuer, bool authorized);\r\n    event CredentialIssued(bytes32 indexed credentialHash, address indexed holder, address indexed issuer, uint64 expiresAt);\r\n    event CredentialRevoked(bytes32 indexed credentialHash, address indexed revokedBy);\r\n    event CredentialVerified(bytes32 indexed credentialHash, address indexed verifier, bool valid, uint256 fee, uint256 verifiedAt);\r\n    event VerificationFeeChanged(uint256 oldFee, uint256 newFee);\r\n    event FeesWithdrawn(address indexed recipient, uint256 amount);\r\n\r\n    constructor() {\r\n        owner = msg.sender;\r\n        authorizedIssuers[msg.sender] = true;\r\n        emit IssuerAuthorizationChanged(msg.sender, true);\r\n    }\r\n\r\n    modifier onlyOwner() {\r\n        require(msg.sender == owner, \"Only owner can call this function.\");\r\n        _;\r\n    }\r\n\r\n    modifier onlyIssuer() {\r\n        require(authorizedIssuers[msg.sender], \"Not an authorized issuer.\");\r\n        _;\r\n    }\r\n\r\n    function setIssuer(address issuer, bool authorized) external onlyOwner {\r\n        require(issuer != address(0), \"Invalid issuer address.\");\r\n        authorizedIssuers[issuer] = authorized;\r\n        emit IssuerAuthorizationChanged(issuer, authorized);\r\n    }\r\n\r\n    function issueCredential(bytes32 credentialHash, address holder, uint64 expiresAt) external onlyIssuer {\r\n        require(credentialHash != bytes32(0), \"Credential hash is required.\");\r\n        require(holder != address(0), \"Invalid holder address.\");\r\n        require(!credentials[credentialHash].exists, \"Credential already exists.\");\r\n        require(expiresAt == 0 || expiresAt > block.timestamp, \"Expiration must be in the future.\");\r\n\r\n        credentials[credentialHash] = Credential(holder, msg.sender, expiresAt, false, true);\r\n        emit CredentialIssued(credentialHash, holder, msg.sender, expiresAt);\r\n    }\r\n\r\n    function revokeCredential(bytes32 credentialHash) external {\r\n        Credential storage credential = credentials[credentialHash];\r\n        require(credential.exists, \"Credential not found.\");\r\n        require(\r\n            msg.sender == owner || msg.sender == credential.issuer || msg.sender == credential.holder,\r\n            \"Not authorized to revoke.\"\r\n        );\r\n        require(!credential.revoked, \"Credential already revoked.\");\r\n\r\n        credential.revoked = true;\r\n        emit CredentialRevoked(credentialHash, msg.sender);\r\n    }\r\n\r\n    function setVerificationFee(uint256 newFee) external onlyOwner {\r\n        uint256 oldFee = verificationFee;\r\n        verificationFee = newFee;\r\n        emit VerificationFeeChanged(oldFee, newFee);\r\n    }\r\n\r\n    function verifyCredential(bytes32 credentialHash) external payable returns (bool valid) {\r\n        require(msg.value == verificationFee, \"Incorrect verification fee.\");\r\n        Credential storage credential = credentials[credentialHash];\r\n        valid = credential.exists && !credential.revoked && (credential.expiresAt == 0 || block.timestamp <= credential.expiresAt);\r\n\r\n        totalVerifications += 1;\r\n        emit CredentialVerified(credentialHash, msg.sender, valid, msg.value, block.timestamp);\r\n    }\r\n\r\n    function withdrawFees() external onlyOwner {\r\n        uint256 amount = address(this).balance;\r\n        require(amount > 0, \"No fees to withdraw.\");\r\n\r\n        (bool sent, ) = payable(owner).call{value: amount}(\"\");\r\n        require(sent, \"Fee withdrawal failed.\");\r\n        emit FeesWithdrawn(owner, amount);\r\n    }\r\n}"
+      }
+    }
+  }
+}

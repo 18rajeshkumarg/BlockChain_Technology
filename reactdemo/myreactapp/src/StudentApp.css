@@ -1,0 +1,282 @@
+.student-shell {
+  width: min(1080px, calc(100% - 40px));
+  margin: 0 auto;
+  padding: 38px 0 52px;
+}
+
+.student-header,
+.section-heading,
+.student-main,
+.student-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.student-header {
+  padding-bottom: 24px;
+  border-bottom: 1px solid #d5ded8;
+}
+
+.student-eyebrow {
+  margin: 0 0 7px;
+  color: #728078;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.student-shell h1,
+.student-shell h2,
+.student-shell h3,
+.student-shell p {
+  margin-top: 0;
+}
+
+.student-shell h1 {
+  margin-bottom: 0;
+  color: #20332b;
+  font-family: Georgia, serif;
+  font-size: 34px;
+  font-weight: 500;
+}
+
+.student-shell h2 {
+  margin-bottom: 0;
+  color: #20332b;
+  font-size: 18px;
+  font-weight: 650;
+}
+
+.student-shell h3 {
+  margin: 0 0 4px;
+  color: #20332b;
+  font-size: 15px;
+  font-weight: 650;
+}
+
+.student-shell button {
+  min-height: 40px;
+  padding: 0 15px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.student-shell button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.connect-button,
+.primary-button {
+  background: #2a7259;
+  color: #fff;
+}
+
+.connect-button:hover,
+.primary-button:hover:not(:disabled) {
+  background: #205b46;
+}
+
+.student-status {
+  margin: 18px 0 0;
+  padding: 12px 14px;
+  border-left: 3px solid #6e8778;
+  background: #f1f4f1;
+  color: #4d5e54;
+  font-size: 13px;
+}
+
+.status-success {
+  border-color: #2a7259;
+  color: #23533f;
+}
+
+.status-error {
+  border-color: #b34e3b;
+  color: #8b3b2c;
+}
+
+.account-line {
+  margin: 12px 0 0;
+  color: #728078;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+.account-line span {
+  margin-left: 8px;
+  color: #33463c;
+  font-family: ui-monospace, Consolas, monospace;
+}
+
+.student-layout {
+  display: grid;
+  grid-template-columns: minmax(300px, 0.8fr) minmax(0, 1.2fr);
+  gap: 48px;
+  margin-top: 34px;
+}
+
+.section-heading {
+  min-height: 52px;
+  margin-bottom: 18px;
+  padding-bottom: 13px;
+  border-bottom: 1px solid #d5ded8;
+}
+
+.section-heading > span,
+.empty-state {
+  color: #728078;
+  font-size: 13px;
+}
+
+.student-fields {
+  display: grid;
+  gap: 15px;
+}
+
+.student-shell label {
+  display: grid;
+  gap: 7px;
+  color: #5e6e64;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.student-shell input {
+  width: 100%;
+  min-height: 40px;
+  padding: 0 10px;
+  border: 1px solid #c5d0c8;
+  border-radius: 4px;
+  background: #fff;
+  color: #20332b;
+  font: inherit;
+  font-size: 14px;
+}
+
+.student-shell input:focus-visible,
+.student-shell button:focus-visible {
+  outline: 3px solid #e1a36f;
+  outline-offset: 2px;
+}
+
+.primary-button {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.secondary-button {
+  border-color: #b7c6bc !important;
+  background: #fff;
+  color: #2a7259;
+}
+
+.secondary-button:hover:not(:disabled) {
+  background: #eff5f0;
+}
+
+.student-list {
+  display: grid;
+}
+
+.student-row {
+  padding: 16px 0;
+  border-bottom: 1px solid #e1e7e2;
+}
+
+.student-main {
+  justify-content: flex-start;
+}
+
+.student-main p {
+  margin-bottom: 0;
+  color: #728078;
+  font-size: 12px;
+}
+
+.student-id {
+  display: grid;
+  width: 40px;
+  aspect-ratio: 1;
+  place-items: center;
+  border-radius: 50%;
+  background: #e7efe9;
+  color: #286b52;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.cgpa-value {
+  margin-left: auto;
+  color: #a65035;
+  font-size: 16px;
+  font-variant-numeric: tabular-nums;
+}
+
+.student-actions {
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+
+.student-actions label {
+  width: 100px;
+}
+
+.student-actions input {
+  min-height: 36px;
+}
+
+.delete-button {
+  border-color: #e0c1b7 !important;
+  background: #fff;
+  color: #a54735;
+}
+
+.delete-button:hover:not(:disabled) {
+  background: #fbefeb;
+}
+
+.empty-state {
+  padding: 24px 0;
+}
+
+.privacy-note {
+  margin: 36px 0 0;
+  padding-top: 15px;
+  border-top: 1px solid #d5ded8;
+  color: #79867d;
+  font-size: 12px;
+}
+
+@media (max-width: 760px) {
+  .student-shell {
+    width: min(100% - 28px, 560px);
+    padding-top: 24px;
+  }
+
+  .student-layout {
+    grid-template-columns: 1fr;
+    gap: 34px;
+  }
+
+  .student-actions {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 460px) {
+  .student-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .student-shell h1 {
+    font-size: 29px;
+  }
+}
