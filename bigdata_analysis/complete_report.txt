@@ -8,58 +8,70 @@
 
   Python Version: 3.15.2
 
+  MERGED PROJECT: BlockChain + Big Data Hadoop Integration
+  ================================================================
+
+  This project combines blockchain technology with Big Data Hadoop analysis.
+  Three Hadoop projects have been analyzed using Python (Hadoop/Pig not available
+  in this environment) and results have been merged into the BlockChain project.
+
+--------------------------------------------------------------------------------
   PROJECT 1: BASKETBALL MATCH ANALYSIS
-  ==================================================
+================================================================================
 
-  Location: Big Data Hadoop/basketball_match_analysis/
+  Location: bigdata_analysis/basketball_hadoop/
   Data Type: Retrosheet play-by-play baseball/softball event data
-  Records Processed: 385,369 event records across 30 files
-  Years Covered: 2017
+  Python Analysis: ✅ Completed successfully
+  Hadoop/Pig: Scripts available (total_counts.pig, id_to_name.pig)
 
-  Key Metrics:
-  - Total files: 30
-  - Unique teams: 4,878
-  - Most common teams: Teams 8, 7, 6, 2, 5
+  Python Results:
+  - 385,369 event records across 30 files
+  - 4,878 unique teams identified
+  - Year: 2017 covered
 
-  Pig Script Compatibility:
+  Key Python Output:
+  - basketball_results.txt: Summary metrics and key findings
+
+  Hadoop/Pig Scripts Available:
   - total_counts.pig: Count matches by league (AL vs NL)
   - id_to_name.pig: Map player IDs to names from roster files
+  - gamedata/: 30 Retrosheet event files
 
-  Python Analysis: ✅ Completed successfully
-  Hadoop/Pig Requirement: 📊 Requires Hadoop cluster
-
+--------------------------------------------------------------------------------
   PROJECT 2: DEMONETIZATION SENTIMENT ANALYSIS
-  ==================================================
+================================================================================
 
-  Location: Big Data Hadoop/demonetization_analysis/
+  Location: bigdata_analysis/demonetization_hadoop/
   Data Type: Twitter tweets about Indian demonetization (2016)
-  Records Processed: 8,000 tweets
-
-  Key Metrics:
-  - Total tweets: 8,000
-  - Positive tweets: 1,144 (14.3%)
-  - Negative tweets: 749 (9.4%)
-  - Positive sentiment ratio: 14.3%
-
-  Sentiment Method: Keyword-based scoring
-  AFINN Dictionary: Present (word-level scores, not fully computed)
-
-  Pig Script Compatibility:
-  - demo notetization_analysis.pig: Full sentiment processing on Hadoop
-
   Python Analysis: ✅ Completed successfully
-  Hadoop/Pig Requirement: 📊 Requires Hadoop cluster
+  Hadoop/Pig: Scripts available (demo notetization_analysis.pig)
 
+  Python Results:
+  - 8,000 tweets analyzed
+  - 1,144 positive tweets (14.3%)
+  - 749 negative tweets (9.4%)
+
+  Key Python Output:
+  - demonetization_results.txt: Sentiment analysis summary
+
+  Hadoop/Pig Scripts Available:
+  - demo notetization_analysis.pig: Full sentiment processing on Hadoop
+  - AFINN.txt: Sentiment dictionary (word-level scores)
+  - positive_tweets/: Positive sentiment tweets
+  - negative_tweets/: Negative sentiment tweets
+
+--------------------------------------------------------------------------------
   PROJECT 3: TITANIC SURVIVAL ANALYSIS
-  ==================================================
+================================================================================
 
-  Location: Big Data Hadoop/titanic_data_analysis/
+  Location: bigdata_analysis/titanic_hadoop/
   Data Type: Titanic passenger dataset (891 records)
+  Python Analysis: ✅ Completed successfully
+  Hadoop/Pig: Scripts available (titanic_avg_age_report.pig, titanic_pclass_report.pig)
 
-  Key Metrics:
-  - Total passengers: 891
-  - Survived: 342 (38.4%)
-  - Died: 549 (61.6%)
+  Python Results:
+  - 891 passengers analyzed
+  - 342 survived (38.4%), 549 died (61.6%)
   - Average age: 29.8 years (from 689 passengers with age data)
   - Sex ratio: 577 male : 314 female
 
@@ -68,35 +80,84 @@
   - 2nd Class: 87/184 survived (47.3%)
   - 3rd Class: 119/491 survived (24.2%)
 
-  Pig Script Compatibility:
+  Key Python Output:
+  - titanic_results.txt: Survival analysis summary
+
+  Hadoop/Pig Scripts Available:
   - titanic_avg_age_report.pig: Avg age by gender and survival status
   - titanic_pclass_report.pig: Survival count by passenger class
+  - TitanicData.txt: Original 891-passenger dataset
 
-  Python Analysis: ✅ Completed successfully
-  Hadoop/Pig Requirement: 📊 Requires Hadoop cluster
+--------------------------------------------------------------------------------
+  INTEGRATION SUMMARY
+================================================================================
 
-  SUMMARY OF ALL FINDINGS
-  ==================================================
+  ✅ BLOCKCHAIN PROJECT MERGED WITH BIG DATA HADOOP ANALYSES
 
-  ✅ ALL THREE PROJECTS ANALYZED SUCCESSFULLY USING PYTHON
+  Combined Project Components:
+  1. Blockchain Core:
+     - Hardhat smart contracts (Lock.sol, CredentialService.sol)
+     - React frontend (CredentialApp + StudentApp)
+     - MetaMask integration
+     - sync-contracts.mjs script
 
-  Project 1 - Basketball: 385K records, 4.8K teams, 30 files
-  Project 2 - Demonetization: 8K tweets, 14.3% positive sentiment
-  Project 3 - Titanic: 891 passengers, 38.4% survival rate, class disparities
+  2. Big Data Hadoop Analyses (Python-Completed):
+     - Project 1: Basketball - 385K records, 4.8K teams
+     - Project 2: Demonetization - 8K tweets, 14.3% positive sentiment
+     - Project 3: Titanic - 891 passengers, 38.4% survival rate
 
-  📁 ANALYSIS RESULTS SAVED TO:
-  - C:\Users\asha g\Documents\BlockChain Project\bigdata_analysis\basketball_results.txt
-  - C:\Users\asha g\Documents\BlockChain Project\bigdata_analysis\demonetization_results.txt
-  - C:\Users\asha g\Documents\BlockChain Project\bigdata_analysis\titanic_results.txt
+  📁 MERGED ANALYSIS RESULTS (bigdata_analysis/):
+  - basketball_results.txt: Basketball analysis summary
+  - basketball_hadoop/: Hadoop scripts and data (total_counts.pig, id_to_name.pig, gamedata/)
+  - complete_report.txt: Comprehensive report of all three projects
+  - demonetization_results.txt: Sentiment analysis summary
+  - demonetization_hadoop/: Hadoop scripts and data (AFINN.txt, positive/negative tweets, demo notetization_analysis.pig)
+  - titanic_results.txt: Titanic survival analysis summary
+  - titanic_hadoop/: Hadoop scripts and data (TitanicData.txt, titanic_avg_age_report.pig, titanic_pclass_report.pig)
 
-  📄 COMPREHENSIVE REPORT: C:\Users\asha g\Documents\BlockChain Project\bigdata_analysis\complete_report.txt
+  📊 ANALYSIS METRICS ACROSS ALL PROJECTS:
+  - Basketball: 385,369 records, 4,878 teams, 30 files
+  - Demonetization: 8,000 tweets, 14.3% positive, 9.4% negative
+  - Titanic: 891 passengers, 38.4% survival, class disparities present
 
-  🚀 NEXT STEPS:
-  1. Install Hadoop/Pig for full distributed processing if needed
-  2. Expand sentiment analysis with AFINN dictionary scores
-  3. Add more detailed demographic analysis to Titanic project
-  4. Visualize basketball data by game/year trends
+  🛠️ TECHNOLOGY STACK:
+  - Blockchain: Hardhat, Solidity, React, Vite, Ethers, MetaMask
+  - Big Data: Python 3.15.2, CSV parsing, Pig Latin scripts (for Hadoop deployment)
+  - Version Control: Git (pushed to GitHub)
 
-  ================================================================
+--------------------------------------------------------------------------------
+  🚀 NEXT STEPS & ENHANCEMENTS
+================================================================================
+
+  1. Hadoop/Pig Deployment:
+     Install Hadoop cluster for full distributed processing
+     - Use pig -x mapreduce with the provided .pig scripts
+     - HDFS setup required for large-scale data processing
+
+  2. Expand Sentiment Analysis:
+     - Full AFINN dictionary scoring for demonetization tweets
+     - Time-series sentiment trend analysis
+
+  3. Enhanced Titanic Analysis:
+     - Demographic breakdowns (age, gender, passenger class combinations)
+     - Visualizations of survival patterns
+
+  4. Basketball Data Trends:
+     - Year-over-year comparisons (extend beyond 2017)
+     - Team performance trends and patterns
+
+  5. Project Visualizations:
+     - Generate charts and graphs from analysis data
+     - Integrate with React frontend dashboards
+
+--------------------------------------------------------------------------------
+  📦 GIT INTEGRATION:
+================================================================================
+
+  - Repository: https://github.com/18rajeshkumarg/BlockChain_Technology.git
+  - All blockchain components and Big Data analyses committed and pushed
+  - Merged structure maintains separation between blockchain core and Hadoop analyses
+
+================================================================================
   End of Report
-  ================================================================
+================================================================================

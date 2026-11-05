@@ -16,20 +16,29 @@ import {
 } from 'ethers'
 import './CredentialApp.css'
 
-type DeploymentNetwork = 'sepolia' | 'mainnet'
+type DeploymentNetwork = 'sepolia' | 'mainnet' | 'localhost'
 
-const NETWORKS: Record<DeploymentNetwork, { chainId: bigint; chainIdHex: string; label: string; storageKey: string }> = {
+const NETWORKS: Record<DeploymentNetwork, { chainId: bigint; chainIdHex: string; label: string; storageKey: string; rpcUrls: string[] }> = {
   sepolia: {
     chainId: 11155111n,
     chainIdHex: '0xaa36a7',
     label: 'Sepolia',
     storageKey: 'credential-service:sepolia:address',
+    rpcUrls: ['https://ethereum-sepolia-rpc.publicnode.com'],
   },
   mainnet: {
     chainId: 1n,
     chainIdHex: '0x1',
     label: 'Ethereum Mainnet',
     storageKey: 'credential-service:mainnet:address',
+    rpcUrls: ['https://ethereum-rpc.publicnode.com'],
+  },
+  localhost: {
+    chainId: 31337n,
+    chainIdHex: '0x7a69',
+    label: 'Local Hardhat',
+    storageKey: 'credential-service:localhost:address',
+    rpcUrls: ['http://127.0.0.1:8545'],
   },
 }
 
@@ -93,7 +102,7 @@ function CredentialApp() {
   const [bundleText, setBundleText] = useState('')
   const [verificationBundle, setVerificationBundle] = useState('')
   const [history, setHistory] = useState<VerificationRecord[]>([])
-  const [status, setStatus] = useState('Connect MetaMask on Sepolia to begin.')
+  const [status, setStatus] = useState('Connect MetaMask on Sepolia or a local Hardhat node to begin.')
   const [statusKind, setStatusKind] = useState<'info' | 'error' | 'success'>('info')
   const [busy, setBusy] = useState(false)
   const [form, setForm] = useState({
@@ -147,16 +156,29 @@ function CredentialApp() {
         })
       } catch (error) {
         const walletError = error as { code?: number }
-        if (walletError.code !== 4902 || networkName !== 'sepolia') {
+        const canAddChain = networkName === 'sepolia' || networkName === 'localhost'
+        if (walletError.code !== 4902 || !canAddChain) {
           throw new Error(`Switch MetaMask to ${target.label} before continuing.`)
         }
-        await provider.request({ method: 'wallet_addEthereumChain', params: [{
-          chainId: target.chainIdHex,
-          chainName: 'Sepolia',
-          nativeCurrency: { name: 'Sepolia ETH', symbol: 'ETH', decimals: 18 },
-          rpcUrls: ['https://ethereum-sepolia-rpc.publicnode.com'],
-          blockExplorerUrls: ['https://sepolia.etherscan.io'],
-        }] })
+        const chainInfo = networkName === 'sepolia'
+          ? {
+            chainId: target.chainIdHex,
+            chainName: 'Sepolia',
+            nativeCurrency: { name: 'Sepolia ETH', symbol: 'ETH', decimals: 18 },
+            rpcUrls: target.rpcUrls,
+            blockExplorerUrls: ['https://sepolia.etherscan.io'],
+          }
+          : {
+            chainId: target.chainIdHex,
+            chainName: 'Local Hardhat',
+            nativeCurrency: { name: 'Hardhat ETH', symbol: 'ETH', decimals: 18 },
+            rpcUrls: target.rpcUrls,
+            blockExplorerUrls: ['http://localhost:8545'],
+          }
+        await provider.request({
+          method: 'wallet_addEthereumChain',
+          params: [chainInfo],
+        })
       }
       browserProvider = new BrowserProvider(provider)
       network = await browserProvider.getNetwork()
@@ -177,7 +199,9 @@ function CredentialApp() {
     setServiceAddress(localStorage.getItem(NETWORKS[networkName].storageKey) ?? '')
     report(networkName === 'mainnet'
       ? 'Mainnet uses real ETH and irreversible transactions. Confirm every wallet prompt carefully.'
-      : 'Sepolia test ETH has no cash value.')
+      : networkName === 'localhost'
+        ? 'Local Hardhat node at http://127.0.0.1:8545. No real funds are used.'
+        : 'Sepolia test ETH has no cash value.')
   }
 
   async function connectWallet() {
@@ -304,7 +328,7 @@ function CredentialApp() {
   async function verifyCredential(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     if (!service) {
-      report('Connect MetaMask and deploy or attach the Sepolia contract first.', 'error')
+      report('Connect MetaMask and deploy or attach the credential contract first.', 'error')
       return
     }
 
@@ -390,10 +414,11 @@ function CredentialApp() {
           <label className="network-select">Deployment network
             <select value={targetNetwork} onChange={event => changeNetwork(event.target.value as DeploymentNetwork)}>
               <option value="sepolia">Sepolia testnet</option>
+              <option value="localhost">Local Hardhat (http://127.0.0.1:8545)</option>
               <option value="mainnet">Ethereum Mainnet</option>
             </select>
           </label>
-          <span className="network-chip">{targetNetwork === 'sepolia' ? 'Test ETH · no cash value' : 'Real ETH · irreversible'}</span>
+          <span className="network-chip">{targetNetwork === 'sepolia' ? 'Test ETH · no cash value' : targetNetwork === 'localhost' ? 'Local node · no real funds' : 'Real ETH · irreversible'}</span>
           <button className="credential-primary" onClick={connectWallet} disabled={busy}>
             {signerAddress ? 'Wallet connected' : 'Connect MetaMask'}
           </button>
@@ -421,10 +446,12 @@ function CredentialApp() {
             <h2>Deploy to {NETWORKS[targetNetwork].label}</h2>
             <p>{targetNetwork === 'sepolia'
               ? 'MetaMask will show the testnet transaction before you approve it.'
-              : 'Mainnet costs real ETH. Deploy only after an independent security review and careful gas review.'}</p>
+              : targetNetwork === 'localhost'
+                ? 'MetaMask will show the local Hardhat transaction before you approve it.'
+                : 'Mainnet costs real ETH. Deploy only after an independent security review and careful gas review.'}</p>
           </div>
           <button className="credential-primary" onClick={deployService} disabled={busy || !signerAddress}>
-            Deploy on {targetNetwork === 'sepolia' ? 'Sepolia' : 'Mainnet'}
+            Deploy on {targetNetwork === 'sepolia' ? 'Sepolia' : targetNetwork === 'localhost' ? 'Local Hardhat' : 'Mainnet'}
           </button>
 
           <div style={{ marginTop: '2rem', paddingTop: '1rem', borderTop: '1px solid #444' }}>
@@ -519,7 +546,9 @@ function CredentialApp() {
       <footer className="credential-footnote">
         {targetNetwork === 'sepolia'
           ? <><strong>Testnet only:</strong> Sepolia ETH is not money. Never issue real personal data on a public chain; use salted hashes and share the private bundle securely. Public verification events and wallet addresses remain visible.</>
-          : <><strong>Mainnet warning:</strong> transactions spend real ETH and are irreversible. Only use after independent security, privacy, legal, and pricing review. Do not put real personal data on-chain.</>}
+          : targetNetwork === 'localhost'
+            ? <><strong>Local development:</strong> the credential service is running on a local Hardhat node at http://127.0.0.1:8545. No real funds are spent and nothing is public.</>
+            : <><strong>Mainnet warning:</strong> transactions spend real ETH and are irreversible. Only use after independent security, privacy, legal, and pricing review. Do not put real personal data on-chain.</>}
       </footer>
     </main>
   )
