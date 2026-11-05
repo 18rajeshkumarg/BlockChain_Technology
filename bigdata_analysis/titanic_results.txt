@@ -2,31 +2,20 @@ BIG DATA HADOOP PROJECT: TITANIC SURVIVAL ANALYSIS
 ============================================================
 
 Data Source: Titanic passenger dataset
-Location: Big Data Hadoop/titanic_data_analysis/
+Location: C:\Users\asha g\Documents\BlockChain Project\Big Data Hadoop\titanic_data_analysis
 
 RESULTS SUMMARY:
 - Total passengers: 891
 - Survived: 342 (38.4%)
 - Died: 549 (61.6%)
-- Average age: 29.8 years (from 689 passengers with age data)
+- Average age: 29.7 years (from 714 passengers with age data)
 - Males: 577, Females: 314
 
 SURVIVAL BY PASSENGER CLASS:
 ================================================================
-1st Class (216 passengers):  
-  - Survived: 136 (63.0%)  
-  - Died: 80 (37.0%)  
-  - Survival rate: 63.0%
-
-2nd Class (184 passengers):  
-  - Survived: 87 (47.3%)  
-  - Died: 97 (52.7%)  
-  - Survival rate: 47.3%
-
-3rd Class (491 passengers):  
-  - Survived: 119 (24.2%)  
-  - Died: 372 (75.8%)  
-  - Survival rate: 24.2%
+1st Class (216 passengers):  - Survived: 136 (63.0%)  - Died: 80 (37.0%)
+2nd Class (184 passengers):  - Survived: 87 (47.3%)  - Died: 97 (52.7%)
+3rd Class (491 passengers):  - Survived: 119 (24.2%)  - Died: 372 (75.8%)
 
 KEY INSIGHTS:
 1. 1st class passengers had highest survival rate (63%)
@@ -36,9 +25,7 @@ KEY INSIGHTS:
 
 PIG SCRIPT COMPATIBILITY:
 - titanic_avg_age_report.pig: Computes average age by gender and survival status
-  - Splits data into survived/died, groups by sex, computes AVG(Age)
 - titanic_pclass_report.pig: Computes survival count by passenger class
-  - Groups by Pclass, counts survived/died per class, unions results
 
 PROJECT SCRIPTS (would run on Hadoop):
 - $ pig -x mapreduce titanic_avg_age_report.pig
